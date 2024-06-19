@@ -16,12 +16,12 @@ pipeline {
             }
         }
     stage('Build') {
-      steps {
-        script {
-          docker.build(DOCKER_IMAGE)
+            steps {
+                script {
+                    dockerImage = docker.build("labbtest/Node.js-project:latest") // Use your Docker Hub username
+                }
+            }
         }
-      }
-    }
     stage('Push') {
       steps {
         script {
