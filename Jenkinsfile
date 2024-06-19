@@ -1,14 +1,20 @@
 pipeline {
+<<<<<<< HEAD
   agent {
     docker {
       image 'node:14'
     }
   }
+=======
+  agent any 
+
+>>>>>>> ba5df7d (first commit)
   environment {
-    DOCKER_CREDENTIALS_ID = 'dockerhub'
+    DOCKERHUB_CREDENTIALS = credentials('dockerhub') // Ensure 'dockerhub-id' matches your Docker Hub credentials ID in Jenkins
    GITHUB_CREDENTIALS = credentials('github') 
-    DOCKER_IMAGE = 'labbtest/nodejs-postgres-app'
+    DOCKER_IMAGE = 'labbtest/nodejs'
   }
+
   stages {
     stage('Clone Repository') {
             steps {
@@ -18,14 +24,15 @@ pipeline {
     stage('Build Docker Image') {
             steps {
                 script {
-                    dockerImage = docker.build("labbtest/Node.js-project:latest") // Use your Docker Hub username
+                    dockerImage = docker.build("labbtest/Nodejs:latest") // Use your Docker Hub username
                 }
             }
         }
+
     stage('Push') {
       steps {
         script {
-          docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDENTIALS_ID) {
+          docker.withRegistry('https://index.docker.io/v1/', DOCKERHUB_CREDENTIALS) {
             docker.image(DOCKER_IMAGE).push('latest')
           }
         }
