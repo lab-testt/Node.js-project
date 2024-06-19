@@ -1,5 +1,10 @@
 pipeline {
-  agent any 
+  agent {
+    docker {
+      image 'docker:latest' // Use a Docker image with Docker CLI tools installed
+      args '-v /var/run/docker.sock:/var/run/docker.sock' // Bind Docker socket to enable Docker commands within the container
+    }
+  }
 
   environment {
     DOCKERHUB_CREDENTIALS = credentials('dockerhub') // Ensure 'dockerhub' matches your Docker Hub credentials ID in Jenkins
@@ -30,6 +35,16 @@ pipeline {
           }
           dockerImage.push('latest')
         }
+      }
+    }
+
+    stage('Install Docker Compose') {
+      steps {
+        sh '''
+          curl -L "https://github.com/docker/compose/releases/download/$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep -Po '(?<=tag_name": "v)[^"]*')" -o /usr/local/bin/docker-compose
+          chmod +x /usr/local/bin/docker-compose
+          docker-compose --version
+        '''
       }
     }
 
