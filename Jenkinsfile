@@ -16,7 +16,7 @@ pipeline {
     stage('Build Docker Image') {
             steps {
                 script {
-                    dockerImage = docker.build("labbtest/Nodejs:latest") // Use your Docker Hub username
+                    dockerImage = docker.build("labbtest/nodejs:latest") // Use your Docker Hub username
                 }
             }
         }
