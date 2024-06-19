@@ -1,5 +1,5 @@
 pipeline {
-  agent {
+  agent any {
     docker {
       image 'node:14'
     }
@@ -10,12 +10,12 @@ pipeline {
     DOCKER_IMAGE = 'labbtest/nodejs-postgres-app'
   }
   stages {
-    stage('Checkout') {
+    stage('Clone Repository') {
             steps {
                 git branch: 'main', credentialsId: 'github', url: 'https://github.com/lab-testt/Node.js-project.git'
             }
         }
-    stage('Build') {
+    stage('Build Docker Image') {
             steps {
                 script {
                     dockerImage = docker.build("labbtest/Node.js-project:latest") // Use your Docker Hub username
