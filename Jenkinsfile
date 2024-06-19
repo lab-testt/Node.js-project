@@ -1,14 +1,6 @@
 pipeline {
-<<<<<<< HEAD
-  agent {
-    docker {
-      image 'node:14'
-    }
-  }
-=======
   agent any 
 
->>>>>>> ba5df7d (first commit)
   environment {
     DOCKERHUB_CREDENTIALS = credentials('dockerhub') // Ensure 'dockerhub-id' matches your Docker Hub credentials ID in Jenkins
    GITHUB_CREDENTIALS = credentials('github') 
