@@ -22,12 +22,13 @@ pipeline {
       }
     }
 
-    stage('Push Docker Image') {
+    stage('Docker Login and Push') {
       steps {
         script {
-          docker.withRegistry('https://index.docker.io/v1/', DOCKERHUB_CREDENTIALS) {
-            dockerImage.push('latest')
+          withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+            sh "echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin"
           }
+          dockerImage.push('latest')
         }
       }
     }
