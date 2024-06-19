@@ -6,14 +6,15 @@ pipeline {
   }
   environment {
     DOCKER_CREDENTIALS_ID = 'dockerhub'
+   GITHUB_CREDENTIALS = credentials('github') 
     DOCKER_IMAGE = 'labbtest/nodejs-postgres-app'
   }
   stages {
     stage('Checkout') {
-      steps {
-        git 'https://github.com/lab-testt/Node.js-project.git'
-      }
-    }
+            steps {
+                git branch: 'main', credentialsId: 'github', url: 'https://github.com/lab-testt/Node.js-project.git'
+            }
+        }
     stage('Build') {
       steps {
         script {
