@@ -1,7 +1,7 @@
 pipeline {
   agent {
     docker {
-      image 'docker:latest' // Use a Docker image with Docker CLI tools installed
+      image 'docker:stable-dind' // Using Docker-in-Docker (dind) image to have Docker CLI tools available
       args '-v /var/run/docker.sock:/var/run/docker.sock' // Bind Docker socket to enable Docker commands within the container
     }
   }
@@ -42,7 +42,7 @@ pipeline {
       steps {
         sh '''
           apk update
-          apk add curl jq
+          apk add --no-cache curl jq
           COMPOSE_VERSION=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r .tag_name)
           curl -L "https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
           chmod +x /usr/local/bin/docker-compose
