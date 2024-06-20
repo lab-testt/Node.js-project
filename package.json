@@ -1,12 +1,13 @@
 {
-  "name": "nodejs-postgres-app",
+  "name": "nodejs-project",
   "version": "1.0.0",
-  "description": "",
+  "description": "Node.js project with Docker and PostgreSQL",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "dependencies": {
+    "express": "^4.17.1",
+    "pg": "^8.6.0"
+  }
 }
